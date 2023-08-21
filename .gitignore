@@ -50,3 +50,10 @@ modules.order
 Module.symvers
 Mkfile.old
 dkms.conf
+
+#Automation Scripts
+*.sh
+*.mk
+
+#IDE stuff
+.vscode
