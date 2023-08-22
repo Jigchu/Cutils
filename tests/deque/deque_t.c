@@ -128,6 +128,9 @@ void get_t(void)
     green();
     fprintf(stdout, ":) get_element works correctly\n");
     reset();
+
+    dlt_deque(test_vals);
+
     return;
 }
 
@@ -151,7 +154,7 @@ void stack_t(void)
         if (push_retval != 0)
         {
             red();
-            fprintf(stderr, ":( Could not push value on deque\n");
+            fprintf(stderr, ":( Could not push value on deque. Returns: %d\n", push_retval);
             reset();
             return;
         }
@@ -196,10 +199,50 @@ void stack_t(void)
     fprintf(stdout, ":) pop works correctly\n");
     reset();
 
+    free(dlt_deque(test_vals));
+
     return;
 }
 
 void queue_t(void)
 {
+    deque *test_var = init_deque(0, 20, 0);
+    if (test_var == NULL)
+    {
+        red();
+        fprintf(stderr, "Could not initialise deque\n");
+        reset();
+        return;
+    }
+    
+    int queue_retval;
+    
+    for (int i = 0; i < 20; i++)
+    {
+        queue_retval = queue(test_var, test_vals[i]);
+        if (queue_retval != 0)
+        {
+            red();
+            fprintf(stderr, "Could not queue value. Returns: %d\n", queue_retval);
+            reset();
+            return;
+        }
+        
+        int *retval = get_element(test_var, i);
+        if (retval != test_vals[i])
+        {
+            red();
+            fprintf(stderr, ":( Incorrect value queeued. Value should have been %d at %p but was instead %d at %p\n", *test_vals[i], test_vals[i], *retval, retval);
+            reset();
+            return;
+        }
+    }
+    
+    int * deq_retval;
+    for (int i = 0; i < 20; i++)
+    {
+        /* code */
+    }
+    
 
 }
