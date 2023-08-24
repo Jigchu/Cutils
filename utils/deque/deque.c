@@ -37,8 +37,6 @@ void **dlt_deque(deque *deque)
     void **retval = deque->deque;
     
     deque->deque = NULL;
-    deque->count = 0;
-    deque->size = 0;
 
     free(deque);
 
@@ -52,14 +50,17 @@ int push(deque *stack, void *value)
         return -1;
     }
     
-    if (stack->count++ <= stack->size)
+    stack->count++;
+
+    if (stack->count <= stack->size)
     {
         stack->deque[stack->count-1] = value;
         return 0;
     }
     
-
-    void **new_mem = realloc(stack->deque, sizeof(void *) * (stack->size++));
+    stack->size++;
+    
+    void **new_mem = realloc(stack->deque, sizeof(void *) * (stack->size));
     if (new_mem == NULL)
     {
         return -2;
@@ -117,7 +118,6 @@ int queue(deque *queue, void *value)
     
     new_mem[queue->count] = value;
     
-    free(queue->deque);
     queue->deque = NULL;
 
     queue->deque = new_mem;

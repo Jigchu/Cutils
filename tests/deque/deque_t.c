@@ -35,7 +35,7 @@ void deque_t(void)
         if (test_var->deque[i] != test_vals[i])
         {
             red();
-            fprintf(stderr, ":( init_deque does not work as intended. Element at %d is supposed to be %p but is instead %p\n", i, test_vals[i], test_var->deque[i]);
+            fprintf(stderr, ":( init_deque does not work as intended. Element at %ld is supposed to be %p but is instead %p\n", i, test_vals[i], test_var->deque[i]);
             reset();
             return;
         }
@@ -238,10 +238,29 @@ void queue_t(void)
         }
     }
     
+    green();
+    fprintf(stdout, ":) queue works correctly\n");
+    reset();
+
     int * deq_retval;
     for (int i = 0; i < 20; i++)
     {
-        /* code */
+        deq_retval = dequeue(test_var);
+        if (deq_retval == NULL)
+        {
+            red();
+            fprintf(stderr, ":( Could not dequeue value.\n");
+            reset();
+            return;
+        }
+        
+        if (deq_retval != test_vals[19 - i])
+        {
+            red();
+            fprintf(stderr, ":( Incorrect value dequeued. Value should have been %d at %p but was instead %d at %p\n", *test_vals[19 - i], test_vals[19 - i], *deq_retval, deq_retval);
+            reset();
+            return;
+        }
     }
     
 
