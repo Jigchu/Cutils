@@ -46,7 +46,6 @@ void **dlt_deque(deque *deque)
     deque->deque = NULL;
 
     free(deque);
-
     return;
 }
 
