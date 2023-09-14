@@ -140,9 +140,8 @@ void *dequeue(deque *queue)
         return NULL;
     }
     
-    queue->size--;
     void *popped_val = queue->deque[0];
-    void **new_mem = realloc(queue->deque, sizeof(void *) * (queue->size));
+    void **new_mem = realloc(queue->deque, sizeof(void *) * (queue->size--));
     if (new_mem == NULL)
     {
         return NULL;
