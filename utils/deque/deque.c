@@ -13,34 +13,41 @@ typedef struct deque
     unsigned long count;
 } deque;
 
-deque *init_deque(void **values, unsigned long size, unsigned long count)
+deque *init_deque(void **values, long size, long count)
 {
     deque *retval = malloc(sizeof(deque));
-    
-    retval->deque = values == NULL && size != 0 ? malloc(sizeof(void *) * size) : values;
-    if (retval->deque == NULL && values != NULL)
+    if (retval == NULL)
     {
-        dlt_deque(retval);
         return NULL;
     }
-    
 
-    retval->size = values == NULL && size < 0 ? 0 : size;
-    retval->count = values == NULL && count < 0 ? 0 : count;
+    retval->count = values == NULL ? 0 : count;
+    retval->size = values == NULL && size == 0 ? 0: size;
+
+    void **deque = malloc(sizeof(void *) * retval->size);
+    if (deque == NULL)
+    {
+        return NULL;
+    }
+
+    memcpy(deque, values, retval->count);
+
+    retval->deque = deque;
 
     return retval;
 }
 
 void **dlt_deque(deque *deque)
 {
-    // Stores the list of pointers
-    void **retval = deque->deque;
-    
+    deque->count = 0;
+    deque->size = 0;
+
+    free(deque->deque);
     deque->deque = NULL;
 
     free(deque);
 
-    return retval;
+    return;
 }
 
 int push(deque *stack, void *value)
