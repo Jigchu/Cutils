@@ -128,6 +128,9 @@ void get_t(void)
     green();
     fprintf(stdout, ":) get_element works correctly\n");
     reset();
+
+    dlt_deque(test_vals);
+
     return;
 }
 
@@ -151,7 +154,7 @@ void stack_t(void)
         if (push_retval != 0)
         {
             red();
-            fprintf(stderr, ":( Could not push value on deque\n");
+            fprintf(stderr, ":( Could not push value on deque. Returns: %d\n", push_retval);
             reset();
             return;
         }
@@ -195,6 +198,8 @@ void stack_t(void)
     green();
     fprintf(stdout, ":) pop works correctly\n");
     reset();
+
+    free(dlt_deque(test_vals));
 
     return;
 }
